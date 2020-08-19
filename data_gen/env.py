@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[ ]:
+
+
 """Simple random agent.
 
 Running this script directly executes the random agent in environment and stores
@@ -22,6 +28,9 @@ from gym import logger
 
 import numpy as np
 from PIL import Image
+
+
+# In[ ]:
 
 
 class RandomAgent(object):
@@ -56,7 +65,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     logger.set_level(logger.INFO)
-
     env = gym.make(args.env_id)
 
     np.random.seed(args.seed)
@@ -76,6 +84,9 @@ if __name__ == '__main__':
         warmstart = 58
     elif args.env_id == 'SpaceInvadersDeterministic-v4':
         crop = (30, 200)
+        warmstart = 50
+    elif args.env_id.startswith('Breakout'):
+        crop = (15, 200)
         warmstart = 50
 
     if args.atari:
@@ -118,7 +129,6 @@ if __name__ == '__main__':
                 if done:
                     break
         else:
-
             while True:
                 replay_buffer[i]['obs'].append(ob[1])
 

@@ -1,4 +1,7 @@
-import utils
+import sys, os
+sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
+from gcowl.c_swm import modules
+from gcowl.c_swm import utils
 
 import numpy as np
 

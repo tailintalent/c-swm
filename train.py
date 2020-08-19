@@ -1,6 +1,5 @@
 import argparse
 import torch
-import utils
 import datetime
 import os
 import pickle
@@ -11,7 +10,10 @@ import logging
 from torch.utils import data
 import torch.nn.functional as F
 
-import modules
+import sys, os
+sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
+from gcowl.c_swm import modules, utils
+from gcowl.settings.filepath import GC_PATH
 
 
 parser = argparse.ArgumentParser()
@@ -78,7 +80,7 @@ if args.cuda:
     torch.cuda.manual_seed(args.seed)
 
 exp_counter = 0
-save_folder = '{}/{}/'.format(args.save_folder, exp_name)
+save_folder = 'GC_PATH/{}/{}/'.format(args.save_folder, exp_name)
 
 if not os.path.exists(save_folder):
     os.makedirs(save_folder)
@@ -96,7 +98,7 @@ pickle.dump({'args': args}, open(meta_file, "wb"))
 device = torch.device('cuda' if args.cuda else 'cpu')
 
 dataset = utils.StateTransitionsDataset(
-    hdf5_file=args.dataset)
+    hdf5_file=GC_PATH + args.dataset)
 train_loader = data.DataLoader(
     dataset, batch_size=args.batch_size, shuffle=True, num_workers=4)
 
